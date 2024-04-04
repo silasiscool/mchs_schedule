@@ -2,7 +2,8 @@ const config_file = fetch('https://script.google.com/macros/s/AKfycbzmPlGpgvvgZR
 
 const sideNavButton = document.getElementById('side-nav-button');
 const sideNav = document.getElementsByClassName('side-nav')[0];
-const downloadButton = document.getElementById('download-file-button')
+const downloadButton = document.getElementById('download-file-button');
+const copyButton = document.getElementById('copy-data-button');
 const content = document.getElementsByClassName('content')[0]
 
 sideNavButton.addEventListener('click', () => {
@@ -17,6 +18,12 @@ downloadButton.addEventListener('click', () => {
       window.open('https://script.google.com/macros/s/AKfycbxOac8gY0O-cryiRJIj-PkNfqdfr_Sw6HpenaoiauhoAit8lz7-vqzae2omah8DBeo/exec','_self');
     }
   }
+})
+
+copyButton.addEventListener('click', () =>{
+  let formatedData = JSON.stringify(JSON.parse(sessionStorage.getItem('configFile')), null, 2);
+  navigator.clipboard.writeText(formatedData);
+  alert('Data Copied to clipboard')
 })
 
 content.addEventListener('click', () => {

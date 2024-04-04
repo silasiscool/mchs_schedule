@@ -107,30 +107,35 @@ body {
   background-position: -100% 0;
 }
 
-#download-file-button {
+#data-buttons {
   position: absolute;
   bottom: 0px;
   right: 0px;
   margin: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#data-buttons button {
   background: none;
   border: none;
   aspect-ratio: 1/1;
 }
 
-#download-file-button:hover, #download-file-button:focus {
+#data-buttons button:hover, #data-buttons button:focus {
   background-color: rgba(255, 255, 255, 10%);
   border-radius: 999px;
 }
 
-#download-file-button:focus-active {
+#data-buttons button:focus-active {
   outline: 2px solid #eeeeee;
 }
 
-#download-file-button:focus {
+#data-buttons button:focus {
   background-color: rgba(255, 255, 255, 15%);
 }
 
-.download-button {
+#data-buttons i {
   color: #CA9D67;
   margin: 10px;
 }
