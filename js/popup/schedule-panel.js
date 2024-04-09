@@ -1,4 +1,5 @@
-let schedulePanel = document.getElementById('schedule-panel');
+let schedulePanel = document.getElementById('schedule-container');
+let showOnlyRemaining = document.getElementById('show-only-remaining');
 
 schedulePanel.addEventListener('click', () => schedulePanel.classList.toggle('show'));
 document.getElementById('main-panel').addEventListener('click', () => schedulePanel.classList.remove('show'));
@@ -11,7 +12,7 @@ function updateSchedulePanel() {
   }
   schedulePanel.innerHTML = '';
   tempSchedule.forEach((item) => {
-    if (timeCompare(tempTimeString, item.time, '<')) {
+    if (!showOnlyRemaining.checked || timeCompare(tempTimeString, item.time, '<')) {
       let tempScheduleTime = document.createElement('div');
       tempScheduleTime.classList.add('schedule-item', 'schedule-time', 'list-item', 'list-time')
       tempScheduleTime.textContent = hourMinute12(new Date('1/1/2001, '+ item.time))

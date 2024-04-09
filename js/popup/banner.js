@@ -3,28 +3,29 @@ let bannerContent = document.getElementById('banner-content');
 let bannerDismissButton = document.getElementById('banner-dismiss-button');
 
 bannerDismissButton.addEventListener('click', () => {
-  dismissedBanners.push(config.banner.id);
+  dismissedBanners.push(bannerData.id);
   setOption('dismissedBanners',dismissedBanners);
   showBanner(false);
 })
 
 async function updateBanner() {
+  await updateBannerData()
   if (
     getQueryStringParameters().hideBanner
-    || config.banner.min_version == 'none'
+    || bannerData.min_version == 'none'
     || !dismissedBanners
-    || dismissedBanners.includes(config.banner.id)
+    || dismissedBanners.includes(bannerData.id)
   ) {
     showBanner(false)
-  } else if (config.banner.min_version == 'all' || versionNumberCompare(await getVersion(), config.banner.min_version, '>=')) {
+  } else if (bannerData.min_version == 'all' || versionNumberCompare(await getVersion(), bannerData.min_version, '>=')) {
     showBanner(true)
   } else showBanner(false)
 }
 
 function showBanner(showBanner) {
   if (showBanner) {
-    bannerContent.innerHTML = config.banner.text;
-    if (config.banner.non_dismissable) {
+    bannerContent.innerHTML = bannerData.text;
+    if (bannerData.non_dismissable) {
       banner.classList.remove('dismissable')
     } else {
       banner.classList.add('dismissable')

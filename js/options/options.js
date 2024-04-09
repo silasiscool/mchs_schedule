@@ -23,7 +23,9 @@ let showJazzCheckbox = document.getElementById('show-jazz');
 let showChamberCheckbox = document.getElementById('show-chamber');
 
 let otherSection = document.getElementById('other-section');
-let showMillisecondsCheckbox = document.getElementById('show-milliseconds')
+let showMillisecondsCheckbox = document.getElementById('show-milliseconds');
+
+let versionNumberText = document.getElementById('version-number-text');
 
 // Interval variables and start & stop functions
 let optionsUpdateInterval;
@@ -37,7 +39,8 @@ function stopIntervals() {
 }
 
 // start
-optionsUpdate()
+optionsUpdate();
+updateVersionNumber();
 
 // update data & show current settings
 async function optionsUpdate() {
@@ -82,6 +85,7 @@ function updateBellOptionsSection() {
     customOffsetSeconds.value = bellOffsetSetting;
   }
   bellOffsetSection.classList.add('show')
+  document.querySelector('label[for="preset-offset"]').textContent = "Preset Offset (Reccomended) : " + bellOffset + " Seconds"; 
 }
 
 function updateThemeSection() {
@@ -122,6 +126,10 @@ function updateOtherSection() {
     showMillisecondsCheckbox.checked = false;
   }
   otherSection.classList.add('show')
+}
+
+async function updateVersionNumber() {
+  versionNumberText.textContent = await getVersion();
 }
 
 // save functions

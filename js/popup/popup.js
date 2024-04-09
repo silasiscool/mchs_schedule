@@ -6,7 +6,6 @@ let root = document.querySelector(':root')
 // css variables
 let minWidth = 700;
 let maxWidth = 980;
-let fullHeight = 500;
 
 // Interval variables and start & stop functions
 let fastUpdateInterval;
@@ -36,19 +35,36 @@ window.addEventListener('online', () => updateData(true));
 
 window.addEventListener("resize", setScaleAndBorder);
 
-// document.body.style.scale = '2'
-
 
 
 // update visuals
 function setScaleAndBorder() {
+  // This is for web version, but is causing annoying borders when the banner is activated on the extension version, so it is being removed for now, hopefully will be fixed sometime when I'm not feeling lazy...
 
-  if (
-    html.clientHeight != body.clientHeight
-    || html.clientWidth != body.clientWidth
-  ) {
-    body.classList.add('full-page')
-  }
+  // if (html.clientWidth/html.clientHeight > maxWidth/body.clientHeight) {
+  //   body.classList.add('scale-type-1', 'use-right-border')
+  //   body.classList.remove('scale-type-2', 'scale-type-3', 'use-bottom-border')
+  //   body.style.scale = html.clientHeight/body.clientHeight;
+  //
+  // } else if (html.clientWidth/html.clientHeight < minWidth/body.clientHeight) {
+  //   body.classList.add('scale-type-2', 'use-bottom-border')
+  //   body.classList.remove('scale-type-1', 'scale-type-3', 'use-right-border')
+  //   body.style.scale = html.clientWidth/body.clientWidth;
+  //
+  // } else if (body.clientWidth == html.clientWidth && body.clientHeight == html.clientHeight) {
+  //   body.classList.remove('scale-type-1', 'scale-type-2', 'scale-type-3')
+  //   body.style.scale = 1
+  //
+  // } else {
+  //   body.classList.add('scale-type-3', 'use-right-border')
+  //   body.classList.remove('scale-type-1', 'scale-type-2', 'use-bottom-border')
+  //   body.style.scale = html.clientHeight/body.clientHeight;
+  // }
+  //
+  // if (html.clientHeight == body.clientHeight && html.clientWidth == body.clientWidth) {
+  //   body.classList.remove('use-right-border', 'use-bottom-border')
+  // }
+
 }
 
 function fastUpdate() {
@@ -57,7 +73,7 @@ function fastUpdate() {
     updateSchedulePanel()
     if (['light', 'dark', 'use-system'].includes(getQueryStringParameters().theme)) {
       theme = getQueryStringParameters().theme
-    } 
+    }
     useSetTheme()
   }
   if (events) {

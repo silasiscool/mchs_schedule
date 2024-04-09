@@ -1,6 +1,20 @@
 #schedule-panel {
-  float: right;
+  /* float: right; */
   width: var(--width-1);
   height: var(--full-height);
   z-index: 10;
+  overflow: hidden;
+}
+
+#show-only-remaining-section {
+  border-bottom: 1px solid var(--primary);
+  padding: 10px;
+  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#schedule-container {
+  height: 100%;
 }

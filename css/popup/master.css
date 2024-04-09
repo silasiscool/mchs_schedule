@@ -44,12 +44,31 @@ body {
   margin: 0;
   color: var(--primary);
   position: relative;
-  transition: height 1s;
   transform-origin: top left;
 }
 
-body.full-page {
-  border: 1px solid var(--primary);
+body.scale-type-1 {
+  width: var(--max-width);
+}
+
+body.scale-type-2 {
+  width: var(--min-width);
+}
+
+body.scale-type-3 {
+  width: var(--min-width);
+}
+
+body.use-right-border {
+  border-right: 1px solid var(--primary);
+}
+
+body.use-bottom-border {
+  border-bottom: 1px solid var(--primary);
+}
+
+body:not(.initializing) {
+  transition: height 1s, width 0.1s;
 }
 
 body:has(#banner.show) {
@@ -87,4 +106,8 @@ button {
 :where(button.no-style) {
   background: none;
   border: none;
+}
+
+input {
+  accent-color: var(--primary);
 }

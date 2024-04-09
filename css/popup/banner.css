@@ -64,6 +64,7 @@
   font-size: 16px;
   color: black;
   line-height: 1.45;
+  white-space: pre-line;
 }
 
 #banner-content a {

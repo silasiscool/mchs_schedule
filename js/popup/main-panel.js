@@ -26,7 +26,7 @@ function updateCalendarSection() {
     item.style.backgroundColor = tempBoxInfo.color;
     item.style.setProperty('--calendar-box-text-color', tempBoxInfo.text_color);
     item.textContent = tempBoxDate.getDate()
-    item.title = tempBoxInfo.display_name;
+    item.title = dayName(tempBoxDate);
     if (tempBoxInfo.tag) {
       item.textContent = tempBoxInfo.tag;
     }
@@ -51,6 +51,7 @@ function updateCalendarSection() {
 // info panel section
 let dayTypeSectionLine = document.getElementById('day-type');
 let periodNameSectionLine = document.getElementById('period-name');
+let countdownWrapper = document.getElementById('countdown-wrapper');
 let countdown = document.getElementById('countdown');
 let countdownWeeks = document.getElementById('weeks-number');
 let countdownDays = document.getElementById('days-number');
@@ -68,11 +69,7 @@ function updateInfoPanelSection() {
 }
 
 function updateDayTypeLine() {
-  tempCurrentDayInfo = dayInfo(dayType(adjustedTime()));
-  if (!tempCurrentDayInfo) {
-    return
-  }
-  dayTypeSectionLine.textContent = tempCurrentDayInfo.display_name;
+  dayTypeSectionLine.textContent = dayName(adjustedTime());
 }
 
 function updateCurrentAndCountdown() {
@@ -81,9 +78,13 @@ function updateCurrentAndCountdown() {
   } else {
     countdown.classList.remove('show-milliseconds');
   }
-
   let tempEndTime = nextPeriod(adjustedTime())?.dateObject
-  if (!tempEndTime) return;
+  if (tempEndTime) {
+    countdownWrapper.classList.remove('summer');
+  } else {
+    countdownWrapper.classList.add('summer');
+    return
+  }
   if(monthDayYear(tempEndTime) == monthDayYear(adjustedTime())) {
     endTimeSectionLine.textContent = `Ends ${hourMinute12(tempEndTime, true)}`
   } else if (monthDayYear(tempEndTime) == monthDayYear(new Date(adjustedTime().setDate(adjustedTime().getDate()+1)))) {
@@ -92,31 +93,45 @@ function updateCurrentAndCountdown() {
     endTimeSectionLine.textContent = `Ends ${hourMinute12(tempEndTime, true)} on ${monthDayYear(tempEndTime, true)}`
   }
   let tempDuration = tempEndTime - adjustedTime();
-  let tempMilliseconds = Math.floor(tempDuration % 1000 /10);
-  let tempSeconds = Math.floor(tempDuration % (60 * 1000) / 1000);
-  let tempMinutes = Math.floor(tempDuration % (60 * 60 * 1000) / (60 * 1000));
-  let tempHours = Math.floor(tempDuration % (24 * 60 * 60 * 1000) / (60 * 60 * 1000));
-  let tempDays = Math.floor(tempDuration % (7 * 24 * 60 * 60 * 1000) / (24 * 60 * 60 * 1000));
-  let tempWeeks = Math.floor(tempDuration % (1) / (1));
 
-  countdownMilliseconds.textContent = (tempMilliseconds.toString().padStart(2, '0')).replace(/0/g, "O");
-  countdownSeconds.textContent = (tempSeconds.toString().padStart(2, '0')).replace(/0/g, "O");
-  countdownMinutes.textContent = (tempMinutes.toString().padStart(2, '0')).replace(/0/g, "O");
-  countdownHours.textContent = (tempHours.toString().padStart(2, '0')).replace(/0/g, "O");
-  countdownDays.textContent = (tempDays.toString().padStart(2, '0')).replace(/0/g, "O");
-  countdownWeeks.textContent = (tempWeeks.toString().padStart(2, '0')).replace(/0/g, "O");
-  countdownMilliseconds.dataset.time = tempMilliseconds;
-  countdownSeconds.dataset.time = tempSeconds;
-  countdownMinutes.dataset.time = tempMinutes;
-  countdownHours.dataset.time = tempHours;
-  countdownDays.dataset.time = tempDays;
-  countdownWeeks.dataset.time = tempWeeks;
+  let tempMilliseconds = tempDuration % 1000;
+  tempDuration -= tempMilliseconds
+  let tempSeconds = tempDuration % (1000 * 60);
+  tempDuration -= tempSeconds
+  let tempMinutes = tempDuration % (1000 * 60 * 60)
+  tempDuration -= tempMinutes
+  let tempHours = tempDuration % (1000 * 60 * 60 * 24)
+  tempDuration -= tempHours
+  let tempDays = tempDuration % (1000 * 60 * 60 * 24 * 7)
+  tempDuration -= tempDays
+  let tempWeeks = tempDuration
+  tempDuration -= tempWeeks
+
+  if (tempDuration != 0) {
+    throw 'Time Calculation Error'
+  }
+
+  countdownMilliseconds.textContent = (Math.floor(tempMilliseconds/10).toString().padStart(2, '0')).replace(/0/g, "O");
+  countdownSeconds.textContent = ((tempSeconds/1000).toString().padStart(2, '0')).replace(/0/g, "O");
+  countdownMinutes.textContent = ((tempMinutes/(1000 * 60)).toString().padStart(2, '0')).replace(/0/g, "O");
+  countdownHours.textContent = ((tempHours/(1000 * 60 * 60)).toString().padStart(2, '0')).replace(/0/g, "O");
+  countdownDays.textContent = ((tempDays/(1000 * 60 * 60 * 24)).toString().padStart(2, '0')).replace(/0/g, "O");
+  countdownWeeks.textContent = ((tempWeeks/(1000 * 60 * 60 * 24 * 7)).toString().padStart(2, '0')).replace(/0/g, "O");
+  countdownMilliseconds.dataset.time = parseInt(countdownMilliseconds.textContent.replace(/O/g, "0"));
+  countdownSeconds.dataset.time = parseInt(countdownSeconds.textContent.replace(/O/g, "0"));
+  countdownMinutes.dataset.time = parseInt(countdownMinutes.textContent.replace(/O/g, "0"));
+  countdownHours.dataset.time = parseInt(countdownHours.textContent.replace(/O/g, "0"));
+  countdownDays.dataset.time = parseInt(countdownDays.textContent.replace(/O/g, "0"));
+  countdownWeeks.dataset.time = parseInt(countdownWeeks.textContent.replace(/O/g, "0"));
 }
 
 function updateCurrentClass() {
 
-  let tempNextClass = prevPeriod(adjustedTime())
-  let tempCustomName = getCustomClassName(tempNextClass?.name)
+  let tempNextClass = prevPeriod(adjustedTime());
+  let tempCustomName = getCustomClassName(tempNextClass?.name);
+  if (!tempCustomName) {
+    tempCustomName = 'Free'
+  }
   periodNameSectionLine.textContent = tempCustomName;
 }
 

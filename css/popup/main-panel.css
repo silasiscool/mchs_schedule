@@ -158,6 +158,19 @@
   display: flex;
 }
 
+#countdown-summer {
+  width: 8ch;
+  position: absolute;
+}
+
+#countdown-wrapper.summer #countdown {
+  visibility: hidden;
+}
+
+#countdown-wrapper:not(.summer) #countdown-summer {
+  visibility: hidden;
+}
+
 .countdown-part {
   overflow: hidden;
   width: 3ch;
@@ -207,19 +220,22 @@ body:not(.initializing) .countdown-part{
 
 
 /* panel movement */
-:is(#events-panel:is(:hover, .show), #events-panel:not([data-length="0"]) ~ #schedule-panel[data-length="0"]) ~ #main-panel {
+@media (hover: hover) and (pointer: fine) {
+  #events-panel:hover ~ #main-panel {
+    left: var(--width-1);
+  }
+
+  :is(#schedule-panel:hover, #events-panel[data-length="0"]) ~ #main-panel {
+    left: calc(var(--full-width) - var(--width-1) - var(--width-2));
+  }
+}
+
+#events-panel.show ~ #main-panel {
   left: var(--width-1);
 }
 
-:is(#schedule-panel:is(:hover, .show), #events-panel[data-length="0"]) ~ #main-panel {
+:is(#schedule-panel.show, #events-panel[data-length="0"]) ~ #main-panel {
   left: calc(var(--full-width) - var(--width-1) - var(--width-2));
-}
-
-:is(
-  #events-panel:not([data-length="0"]) ~ #schedule-panel[data-length="0"],
-  #events-panel[data-length="0"]
-) ~ #main-panel {
-
 }
 
 body.initializing #main-panel {
@@ -231,13 +247,15 @@ body.initializing #main-panel {
   text-decoration: inherit;
   display: block;
   padding: 10px;
-  height: 30px;
-  width: 30px;
+  /* height: 30px;
+  width: 30px; */
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
+  background: none;
+  border: none;
 }
 
 

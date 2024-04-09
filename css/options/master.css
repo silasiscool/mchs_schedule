@@ -129,3 +129,10 @@ input {
   opacity: 50%;
   pointer-events: none;
 }
+
+#version-number-text {
+  font-size: 0.6rem;
+  font-style: italic;
+  opacity: 60%;
+  padding: 0.5em
+}

@@ -3,12 +3,20 @@ if (localStorage.optionsVersion != 1) {
   localStorage.optionsVersion = 1;
 }
 
+// constant settings
+let defaultUnsetDayType = 'vacation';
 
+// urls
+let configFileUrl = 'https://script.google.com/macros/s/AKfycbzmPlGpgvvgZRqerq2xx-M_PikKISc6cLKy6Apkk1Rhefo7H12gJ9oVH8QlU0v09FiCDA/exec';
+let eventsAPIRawUrl = 'https://script.google.com/macros/s/AKfycbzRkbIrdc42LeKadHYe8DY2XhSvSGCMzmql0-2shS439Lyqj4D56jwMDBD3_-nFTEyCuw/exec';
+let bannerDataUrl = 'https://script.google.com/macros/s/AKfycbzS_YZzrVRiJcSqVC-6A-6vM_IB9YEVGiyWeBmXGypQpi4mf8YjgEt2YcQKBWg_CR0/exec';
 
 // initilize variables
-let configFileUrl = 'https://raw.githubusercontent.com/silasiscool/MCHS_Schedule/main/config.json';
 let configFile;
 let config;
+
+let bannerDataFile;
+let bannerData;
 
 let classNames;
 let bellOffset;
@@ -19,7 +27,6 @@ let showChamber;
 let theme;
 let showMilliseconds;
 
-let eventsAPIRawUrl = "https://script.google.com/macros/s/AKfycbzRkbIrdc42LeKadHYe8DY2XhSvSGCMzmql0-2shS439Lyqj4D56jwMDBD3_-nFTEyCuw/exec";
 let events;
 
 let calendarOffsetWeeks = 0;
@@ -27,6 +34,7 @@ let calendarOffsetWeeks = 0;
 // update data functions
 async function updateData(doUpdateOptions) {
   await updateConfig()
+  await updateBannerData()
   if (doUpdateOptions) {
     updateOptions()
   }
@@ -44,9 +52,30 @@ async function updateConfig() {
 
 async function fetchConfig() {
   if (!window.navigator.onLine) return;
-  configFile = fetch(addNoCache(configFileUrl));
+
+  configFile = fetch(configFileUrl);
   config = await configFile.then(res=>res.json());
   localStorage.config = JSON.stringify(config);
+}
+
+async function updateBannerData() {
+  if (localStorage.bannerData) {
+    bannerData = JSON.parse(localStorage.bannerData)
+    fetchBannerData()
+  } else {
+    await fetchBannerData()
+  }
+}
+
+async function fetchBannerData() {
+  // await updateConfig();
+  // bannerData = config.banner;
+  // localStorage.bannerData = JSON.stringify(bannerData);
+
+  if (!window.navigator.onLine) return;
+  bannerDataFile = fetch(bannerDataUrl);
+  bannerData = await bannerDataFile.then(res=>res.json());
+  localStorage.bannerData = JSON.stringify(bannerData);
 }
 
 async function updateOptions() {
@@ -64,57 +93,71 @@ async function updateOptions() {
       'theme',
       'showMilliseconds'
     ], res=>{
-      if (res.classNames) {
+      if (localStorage.classNames) {
+        chrome.storage.sync.set({classNames: JSON.parse(localStorage.classNames)});
+      } else if (res.classNames) {
         localStorage.classNames = JSON.stringify(res.classNames);
       } else {
         let tempClassNames = [];
         config.nameable_classes.forEach((item) => {
           tempClassNames.push({class:item, name:item});
         });
-        chrome.storage.sync.set({classNames: tempClassNames});
         localStorage.classNames = JSON.stringify(tempClassNames);
+        chrome.storage.sync.set({classNames: JSON.parse(localStorage.classNames)})
       };
 
-      if (res.bellOffsetSetting) {
+      if (localStorage.bellOffsetSetting) {
+        chrome.storage.sync.set({bellOffsetSetting: JSON.parse(localStorage.bellOffsetSetting)});
+      } else if (res.bellOffsetSetting) {
         localStorage.bellOffsetSetting = JSON.stringify(res.bellOffsetSetting);
       } else {
-        chrome.storage.sync.set({bellOffsetSetting: 'preset'});
         localStorage.bellOffsetSetting = JSON.stringify('preset');
+        chrome.storage.sync.set({bellOffsetSetting: JSON.parse(localStorage.bellOffsetSetting)});
       };
 
-      if (res.dismissedBanners) {
+      if (localStorage.dismissedBanners) {
+        chrome.storage.sync.set({dismissedBanners: JSON.parse(localStorage.dismissedBanners)});
+      } else if (res.dismissedBanners) {
         localStorage.dismissedBanners = JSON.stringify(res.dismissedBanners);
       } else {
-        chrome.storage.sync.set({dismissedBanners: []});
         localStorage.dismissedBanners = JSON.stringify([]);
+        chrome.storage.sync.set({dismissedBanners: JSON.parse(localStorage.dismissedBanners)});
       };
 
-      if (res.showJazz) {
+      if (localStorage.showJazz) {
+        chrome.storage.sync.set({showJazz: JSON.parse(localStorage.showJazz)});
+      } else if (res.showJazz) {
         localStorage.showJazz = JSON.stringify(res.showJazz);
       } else {
-        chrome.storage.sync.set({showJazz: false});
         localStorage.showJazz = JSON.stringify(false);
+        chrome.storage.sync.set({showJazz: JSON.parse(localStorage.showJazz)});
       };
 
-      if (res.showChamber) {
+      if (localStorage.showChamber) {
+        chrome.storage.sync.set({showChamber: JSON.parse(localStorage.showChamber)});
+      } else if (res.showChamber) {
         localStorage.showChamber = JSON.stringify(res.showChamber);
       } else {
-        chrome.storage.sync.set({showChamber: false});
         localStorage.showChamber = JSON.stringify(false);
+        chrome.storage.sync.set({showChamber: JSON.parse(localStorage.showChamber)});
       };
 
-      if (res.theme) {
+      if (localStorage.theme) {
+        chrome.storage.sync.set({theme: JSON.parse(localStorage.theme)});
+      } else if (res.theme) {
         localStorage.theme = JSON.stringify(res.theme);
       } else {
-        chrome.storage.sync.set({theme: 'use-system'});
         localStorage.theme = JSON.stringify('use-system');
+        chrome.storage.sync.set({theme: JSON.parse(localStorage.theme)});
       };
 
-      if (res.showMilliseconds) {
+      if (localStorage.showMilliseconds) {
+        chrome.storage.sync.set({showMilliseconds: JSON.parse(localStorage.showMilliseconds)});
+      } else if (res.showMilliseconds) {
         localStorage.showMilliseconds = JSON.stringify(res.showMilliseconds);
       } else {
-        chrome.storage.sync.set({showMilliseconds: false});
         localStorage.showMilliseconds = JSON.stringify(false);
+        chrome.storage.sync.set({showMilliseconds: JSON.parse(localStorage.showMilliseconds)});
       };
     });
   } catch {
@@ -149,7 +192,7 @@ async function updateOptions() {
     if (!localStorage.showMilliseconds) {
       localStorage.showMilliseconds = JSON.stringify(false);
     };
-  };
+  }
 
   classNames = localStorage.classNames ? JSON.parse(localStorage.classNames) : undefined;
   if (!localStorage.bellOffsetSetting) {
@@ -170,9 +213,9 @@ async function updateOptions() {
 
 function setOption(key, value) {
   localStorage.setItem(key, JSON.stringify(value))
-  try {
-    chrome.storage.sync.set(JSON.parse('{'+JSON.stringify(key)+':'+JSON.stringify(value)+'}'))
-  } catch {}
+  // try {
+  //   chrome.storage.sync.set(JSON.parse('{'+JSON.stringify(key)+':'+JSON.stringify(value)+'}'))
+  // } catch {}
   updateOptions()
 }
 
@@ -213,28 +256,28 @@ function addCalendarOffset(time) {
   return tempReturnDate
 }
 
-function weekType(time) {
-  return config.week_schedule.find(item=>item.monday_date==monthDayYear(mondayDate(time)))?.schedule;
-}
-
 function dayType(time) {
   let tempDaySchedule = config.day_schedule.find(item=>item.date==monthDayYear(time));
   if (tempDaySchedule) {
-    return tempDaySchedule.schedule
+    return tempDaySchedule.schedule;
   }
-  let tempReturnData = weekSchedule(weekType(time))
-  if (tempReturnData) {
-    return tempReturnData.schedule[time.getDay()];
-  }
-
-}
-
-function weekSchedule(type) {
-  return config.week_types.find(item=>item.name==type);
+  return defaultUnsetDayType
 }
 
 function dayInfo(type) {
   return config.day_types.find(item=>item.name==type);
+}
+
+function dayName(time) {
+  let tempDay = config.day_schedule.find(item=>item.date==monthDayYear(time));
+  if (tempDay?.alt_name) {
+    return tempDay.alt_name;
+  };
+  tempCurrentDayInfo = dayInfo(dayType(time));
+  return tempCurrentDayInfo.display_name;
+  if (tempCurrentDayInfo) {
+
+  }
 }
 
 function nextPeriod(time) {
@@ -275,8 +318,7 @@ function prevPeriod(time) {
   if (!tempDayScheduleList) return;
 
   if (tempDayScheduleList.length == 0 || timeCompare(tempTimeString, tempDayScheduleList.at(0).time, '<')) { // before
-    // throw "Not yet implemented"
-    for (let i = 0; i < 365; i++) { // TEMP: Change to i < 365
+    for (let i = 0; i < 365; i++) {
       let tempDate = new Date(time);
       tempDate.setDate(tempDate.getDate()-i-1)
       if (dayInfo(dayType(tempDate)).schedule.length > 0) {
@@ -357,7 +399,7 @@ function hourMinute12(time, showAMPM) {
     } else if (time.getHours()>12) {
       return  (time.getHours()-12) + ':' + time.getMinutes().toString().padStart(2, '0') + " PM"
     } else if (time.getHours()==12) {
-      return  time.getHours() + ':' + time.getMinutes().toString().padStart(2, '0') + " AM"
+      return  time.getHours() + ':' + time.getMinutes().toString().padStart(2, '0') + " PM"
     }
   } else {
     if (time.getHours()<=12) {
@@ -384,7 +426,7 @@ function timeCompare(timeString1, timeString2, method) {
   } else if (method == '<=') {
     return tempDate1 <= tempDate2;
   } else {
-    throw "invalid timeCompare meathod"
+    throw "invalid timeCompare method"
   };
 }
 
@@ -418,7 +460,7 @@ function versionNumberCompare(version1, version2, method) {
   } else if (method == '<=') {
     return tempVersion1Sum <= tempVersion2Sum;
   } else {
-    throw "invalid versionNumberCompare meathod"
+    throw "invalid versionNumberCompare method"
   };
 }
 

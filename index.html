@@ -3,8 +3,8 @@
   <head>
     <!-- meta tags -->
     <meta charset="utf-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <meta name="viewport" content="height=device-height, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="height=device-height, initial-scale=1.0"> -->
 
     <!-- tab info -->
     <title>MCHS Schedule</title>
@@ -40,10 +40,16 @@
     </style>
   </head>
   <body class="initializing">
-    <h1 style="opacity: 10%; position: absolute; top: 150px; left: 180px; z-index: 999; transform: rotate(45deg); font-size: 100px;">DRAFT</h1>
+    <!-- <h1 style="opacity: 10%; position: absolute; top: 150px; left: 180px; z-index: 999; transform: rotate(45deg); font-size: 100px;">DRAFT</h1> -->
     <main>
       <div id="events-panel" class="panel list-container"></div>
-      <div id="schedule-panel" class="panel list-container"></div>
+      <div id="schedule-panel" class="panel">
+        <div id="show-only-remaining-section">
+          <input type="checkbox" id="show-only-remaining" checked>
+          <label for="show-only-remaining">Show Only Remaining Classes</label>
+        </div>
+        <div id="schedule-container" class="list-container"></div>
+      </div>
       <div id="main-panel" class="panel">
         <div id="calendar-panel-section" class="main-panel-section">
           <button type="button" id="prev-week-scroll-button" class="week-scroll-button no-style">
@@ -66,25 +72,28 @@
         </div>
         <div id="info-panel-section" class="main-panel-section">
           <div id="button-menu" class="info-panel-section-line">
+            <!-- <a href="#" target="_self" class="nav-link">
+              <span class="material-symbols-outlined">
+                help
+              </span>
+            </a> -->
+
             <a href="options.html" target="_self" class="nav-link" title="Options">
               <span class="material-symbols-outlined">
                 settings
               </span>
             </a>
-            <!-- <a href="#" target="_self" class="nav-link">
+
+            <!-- <button href="#" target="_self" class="nav-link">
               <span class="material-symbols-outlined">
-                help
+                more_horiz
               </span>
-            </a>
-            <a href="#" target="_self" class="nav-link">
-              <span class="material-symbols-outlined">
-                bug_report
-              </span>
-            </a> -->
+            </button> -->
           </div>
           <div id="day-type" class="info-panel-section-line"></div>
           <div id="period-name" class="info-panel-section-line"></div>
           <div id="countdown-wrapper" class="info-panel-section-line">
+            <div id="countdown-summer">Summer</div>
             <div id="countdown" class="show-milliseconds">
               <div id="weeks-number" class="countdown-part"></div>
               <div id="days-number" class="countdown-part"></div>
