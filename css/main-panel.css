@@ -1,0 +1,19 @@
+/* Styles for inside of the main panel */
+
+#main-panel > .calendar-section {
+    height: 5rem;
+    background: greenyellow;
+}
+
+#main-panel > .info-section {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/* #main-panel > .info-section > * {
+
+} */
