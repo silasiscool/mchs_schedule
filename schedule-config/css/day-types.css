@@ -1,0 +1,157 @@
+.dialog-schedule.dialog {
+  background: #3c3c3b;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  min-width: 300px;
+  max-height: 80vh;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  overflow: auto;
+}
+
+.dialog-schedule.dialog-close-button {
+  background: none;
+  border: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.dialog-schedule.dialog-close:hover {
+  transform: scale(1.2);
+}
+
+.dialog-schedule:not(.dialog) {
+  color: #ffffff;
+  margin: 10px;
+}
+
+
+.dialog-schedule.colors-display {
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* width */
+.dialog-schedule::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.dialog-schedule::-webkit-scrollbar-track {
+  background: #3c3c3b;
+}
+
+/* Handle */
+.dialog-schedule::-webkit-scrollbar-thumb {
+  background: #bbbbbb;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+.dialog-schedule::-webkit-scrollbar-thumb:hover {
+  background: #eeeeee;
+}
+
+#add-edit-type {
+  border: 1px solid #ffffff;
+  border-radius: 7px;
+  padding: 20px;
+  width: fit-content;
+}
+
+#add-type-button {
+  background: none;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 5px;
+  font-size: 1em;
+}
+
+#add-type-button:hover {
+  transform: scale(1.1);
+}
+
+#add-type-button:active {
+  transform: scale(1);
+}
+
+.buttontype1 {
+  background: none;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 5px;
+  font-size: 1em;
+}
+
+.buttontype1:hover {
+  transform: scale(1.1);
+}
+
+.buttontype1:active {
+  transform: scale(1);
+}
+
+#day-tag {
+  width: 20px;
+}
+
+#day-schedule-list {
+  margin-left: 10px;
+  width: fit-content;
+}
+
+#day-schedule-add {
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 5px;
+  padding-left: 10px;
+  width: fit-content;
+}
+
+#day-schedule-add-time{
+  margin-right: 20px;
+}
+
+#day-schedule-add-button {
+  background: none;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 5px;
+  font-size: 1em;
+}
+
+#day-schedule-add-button:hover {
+  transform: scale(1.1);
+}
+
+#day-schedule-add-button:active {
+  transform: scale(1);
+}
+
+#day-name,
+#day-display-name {
+  width: 150px;
+}
+
+.day-schedule-item {
+    border: 1px solid #ffffff;
+    height: 40px;
+    line-height: 40px;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+/* .day-schedule-item-remove, */
+.day-schedule-item-edit {
+  margin-left: 20px;
+  display: inline-block;
+}

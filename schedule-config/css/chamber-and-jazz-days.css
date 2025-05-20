@@ -1,0 +1,14 @@
+#add-date-button {
+  margin: 10px;
+  margin-bottom: 20px;
+  background: none;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 5px;
+  font-size: 1em;
+}
+
+#add-date-button:hover {
+  transform: scale(1.1);
+}

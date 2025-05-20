@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Day Types | MCHS Schedule Config</title>
+    <link rel="shortcut icon" href="icons/icon16.png">
+    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/item-list.css">
+    <link rel="stylesheet" href="css/day-types.css">
+    <script src="https://kit.fontawesome.com/b445dd26e2.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="header">
+      <button type="button" id="side-nav-button">
+        <div class="hamburger-menu">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </button>
+      <div class="header-title">
+        <h1>Day Types</h1>
+      </div>
+      <div id="data-buttons">
+        <button type="button" id="download-file-button">
+          <i class="fa-solid fa-download fa-2x"></i>
+        </button>
+        <button type="button" id="copy-data-button">
+          <i class="fa-regular fa-copy fa-2x"></i>
+        </button>
+      </div>
+    </div>
+    <div class="side-nav">
+      <a href="index.html" class="side-nav-item">Home</a>
+      <a href="day-schedule.html" class="side-nav-item">Day Schedule</a>
+      <a href="day-types.html" class="side-nav-item">Day Types</a>
+      <a href="nameable-classes.html" class="side-nav-item">Nameable Classes</a>
+      <a href="chamber-days.html" class="side-nav-item">Chamber Days</a>
+      <a href="jazz-days.html" class="side-nav-item">Jazz Days</a>
+      <a href="banner.html" class="side-nav-item">Banner</a>
+      <a href="bell-offset.html" class="side-nav-item">Bell Offset</a>
+    </div>
+    <div class="content">
+      <!-- <h2>Description</h2>
+        <p>Add, edit, remove, or just view types of days</p>
+      <h2>How to Use</h2>
+        <h3>Adding new day type</h3>
+          <p>Go to the <a href="#add-edit-header">Add or edit day type</a> section, then follow these steps:</p>
+          <ol>
+            <li>Input a unique name for the day type. <strong>This cannot have any spaces.</strong>
+              <br>This is what the computer uses to identify and reference the schedule.
+              <br>Nobody will see this on the user side.</li>
+            <li>Input a display name for the day type.
+              <br><em>This</em> is what users see.</li>
+            <li>Input a background color for the day type.
+              <br>This is what the background color for the day will be in the week schedule at the top of the extension popup.</li>
+            <li>Input a text color for the day type.
+              <br>This is what the text color for the day will be in the week schedule at the top of the extension popup.
+              <br><strong>Should be either black (#000000) or white (#ffffff) unless extreme circumstances.</strong></li>
+            <li><strong>Optional:</strong> Input a tag for the day type.
+              <br>If a value is inputed, the inputed value will replace the current date in week schedule at the top of the extension popup.
+              <br>If no value is inputed, the current date will be used.</li>
+            <li>Input the schedule for the day type.
+              <br>If inputing schedule for a no-school day, leave the schedule empty.
+              <br><strong>Be sure to add an end of day item</strong> (Typically named Free) <strong>at the end of every schedule.</strong> (Unless Totally Empty Schedule)
+              <br>Do the following to input a schedule:
+              <ol class="lower-roman">
+                <li>Input the start time in the time input box.</li>
+                <li>Input the name it the name inupt box.</li>
+                <li>Press the Add Item button</li>
+                <li>Repeat i-iii until all schedule items are inputed</li>
+              </ol>
+            </li>
+            <li>Press the Add Type button near the top of the input group.</li>
+          </ol>
+        <h3>Edit existing day type</h3>
+          <p>Go to the <a href="#add-edit-header">Add or edit day type</a> section, then follow these steps:</p>
+          <ol>
+            <li>Use the dropdown in the name input box to select day type to edit.
+            <li>Edit any desired properties</li>
+            <li>Press the Add Type button near the top of the input group.</li>
+          </ol>
+        <h3>Remove day type</h3>
+          <p>Click the <i class="fa-solid fa-trash"></i> button next to day type to remove.</p>
+        <h3>View day type</h3>
+          <p>Click the <i class="fa-regular fa-eye item-remove"></i> button next to day type to view day type properties.</p>
+        <strong>
+          <h3>Important:</h3>
+            <ol>
+              <li>Ensure day names & period names match syntax of existing names</li>
+            </ol>
+        </strong> -->
+      <h2>Settings</h2>
+        <h3 id="add-edit-header">Add or edit day type</h3>
+          <div id="add-edit-type">
+            <button type="button" id="add-type-button"><i class="fa-solid fa-plus"></i> Add Type</button>
+            <button type="button" id="import-type-button" class="buttontype1">Import from: </button><select id="import-type-select"></select>
+            <p>* Required</p>
+            <label for="day-name">Name:</label>
+            <input type="text" list="day-types-list" onkeypress="return event.which != 32" id="day-name">*
+            <datalist id="day-types-list"></datalist>
+            <br>
+            <label for="day-display-name">Display Name:</label>
+            <input type="text" id="day-display-name">*
+            <br>
+            <button type="button" id="import-colors-button" class="buttontype1">Import Colors & Tag from: </button><select id="import-colors-select" value=""></select>
+            <br>
+            <label for="day-background-color">Background Color:</label>
+            <div class="color-picker-display" id="day-background-color-display">
+              <input type="color" id="day-background-color">
+            </div>*
+            <br>
+            <label for="day-text-color">Text Color:</label>
+            <div class="color-picker-display" id="day-text-color-display">
+              <input type="color" id="day-text-color">
+            </div>*
+            <br>
+            <label for="day-tag">Tag:</label>
+            <input type="text" id="day-tag" maxlength="2">
+            <label for="day-tag">(Leave blank to use date number as tag)</label>
+            <p>Schedule:</p>
+            <div id="day-schedule-list"></div>
+            <p>Add Schedule Item:</p>
+            <div id="day-schedule-add">
+              <label for="day-schedule-add-time">Time:</label>
+              <input type="time" id="day-schedule-add-time">
+              <label for="day-schedule-add-name">Name:</label>
+              <input type="text" id="day-schedule-add-name" list="period-names-list">
+              <datalist id="period-names-list"></datalist>
+              <button type="button" id="day-schedule-add-button"><i class="fa-solid fa-plus"></i> Add Item</button>
+            </div>
+          </div>
+        <h3>View or remove day types</h3>
+          <div id="item-list"></div>
+          <div id="dialog-list"></div>
+    </div>
+    <script src="js/master.js" charset="utf-8"></script>
+    <script src="js/day-types.js" charset="utf-8"></script>
+  </body>
+</html>

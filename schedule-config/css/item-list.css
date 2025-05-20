@@ -1,0 +1,43 @@
+#item-list {
+  width: fit-content;
+}
+
+.item-item {
+  border: 1px solid #ffffff;
+  height: 40px;
+  position: relative;
+  width: 100%;
+}
+
+.item-name {
+  width: fit-content;
+  float: left;
+  line-height: 40px;
+  padding: 0 10px 0 10px;
+}
+
+.item-view-button,
+.item-remove-button,
+.item-edit-button{
+  border: none;
+  background: none;
+  float: right;
+  line-height: 40px;
+  margin-right: 10px;
+}
+
+.item-view-button:hover,
+.item-remove-button:hover,
+.item-edit-button:hover {
+  transform: scale(1.2);
+}
+
+.item-view-button:focus,
+.item-remove-button:focus,
+.item-edit-button:focus {
+  transform: scale(1.5);
+}
+
+.item-view, .item-remove {
+  color: #ffffff;
+}

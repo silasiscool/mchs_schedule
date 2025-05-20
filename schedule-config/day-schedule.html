@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Day Schedule | MCHS Schedule Config</title>
+    <link rel="shortcut icon" href="icons/icon16.png">
+    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/item-list.css">
+    <link rel="stylesheet" href="css/day-schedule.css">
+    <script src="https://kit.fontawesome.com/b445dd26e2.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="header">
+      <button type="button" id="side-nav-button">
+        <div class="hamburger-menu">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </button>
+      <div class="header-title">
+        <h1>Day Schedule</h1>
+      </div>
+      <div id="data-buttons">
+        <button type="button" id="download-file-button">
+          <i class="fa-solid fa-download fa-2x"></i>
+        </button>
+        <button type="button" id="copy-data-button">
+          <i class="fa-regular fa-copy fa-2x"></i>
+        </button>
+      </div>
+    </div>
+    <div class="side-nav">
+      <a href="index.html" class="side-nav-item">Home</a>
+      <a href="day-schedule.html" class="side-nav-item">Day Schedule</a>
+      <a href="day-types.html" class="side-nav-item">Day Types</a>
+      <a href="nameable-classes.html" class="side-nav-item">Nameable Classes</a>
+      <a href="chamber-days.html" class="side-nav-item">Chamber Days</a>
+      <a href="jazz-days.html" class="side-nav-item">Jazz Days</a>
+      <a href="banner.html" class="side-nav-item">Banner</a>
+      <a href="bell-offset.html" class="side-nav-item">Bell Offset</a>
+    </div>
+    <div class="content">
+      <h2>Description</h2>
+        <p>View and modify the day schedulee</p>
+      <h2>How To Use</h2>
+        <p>To add a date to the day schedule, fill out the date and day type fields, and if desired, change the display name field under the <a href="#add-date-section">Add Date</a> section, then click the add date button.</p>
+        <p>To remove a date from the day schedule, click the <i class="fa-solid fa-trash item-remove"></i> button next to the date you wish to remove</p>
+      <h2>Settings</h2>
+        <h3 id="add-date-section">Add Date</h3>
+          <input type="date" id="add-date-date">
+          <select id="type-select">
+              <option value="">-Choose day type-</option>
+          </select>
+          <input type="text" name="alt-name" id="alt-name" placeholder="Display Name">
+          <button type="button" id="add-date-button"><i class="fa-solid fa-plus"></i> Add Date</button><br>
+          <input type="checkbox" name="bulk-add-checkbox" id="bulk-add-checkbox">
+          <label for="bulk-add-checkbox">Bulk Add Days</label>
+        <h3>Day Schedule</h3>
+          <div id="item-list"></div>
+    </div>
+    <script src="js/master.js" charset="utf-8"></script>
+    <script src="js/day-schedule.js" charset="utf-8"></script>
+  </body>
+</html>

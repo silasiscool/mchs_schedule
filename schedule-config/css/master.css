@@ -1,0 +1,262 @@
+body {
+  font-family: Lato, sans-serif;
+  background-color: #1F1F1F;
+  color: #ffffff;
+  margin: 0px;
+  overflow: hidden;
+}
+
+.header {
+  background-color: #3c3c3b;
+  border-top: 5px solid #CA9D67;
+  position: relative;
+  height: 90px;
+}
+
+.header-title {
+  position: absolute;
+  bottom: 0px;
+  left: 75px;
+}
+
+#side-nav-button {
+  background: none;
+  border: none;
+  margin: 10px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  bottom: 0px;
+}
+
+#side-nav-button:hover, #side-nav-button:focus {
+  background-color: rgba(255, 255, 255, 10%);
+  border-radius: 999px;
+}
+
+#side-nav-button:focus-visible {
+  outline: 2px solid #eeeeee;
+}
+
+#side-nav-button:focus {
+  background-color: rgba(255, 255, 255, 15%);
+}
+
+.hamburger-menu {
+  background: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.hamburger-menu div {
+  background: #CA9D67;
+  border-radius: 100px;
+  width: 25px;
+  height: 2.5px;
+  margin: 5px;
+  transition-property: opacity, transform;
+  transition-duration: 0.5s;
+  transition-timing-function: cubic-bezier(.09,.22,0,.98);
+}
+
+#side-nav-button.open .hamburger-menu div:first-child {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+#side-nav-button.open .hamburger-menu div:nth-child(2) {
+  opacity: 0;
+}
+
+#side-nav-button.open .hamburger-menu div:last-child {
+  transform: translateY(-7.5px) rotate(-45deg);
+  /* visibility: hidden; */
+}
+
+.side-nav {
+  box-sizing: border-box;
+  background: #3c3c3b;
+  border-top: 3px solid #CA9D67;
+  width: 0px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: width 0.5s cubic-bezier(.09,.22,0,.98);
+  height: 100%;
+  position: absolute;
+  z-index: 100;
+}
+
+.side-nav.open {
+  width: 200px;
+}
+
+.side-nav-item {
+  height: 20px;
+  width: fit-content;
+  overflow-x: hidden;
+  white-space: nowrap;
+  color: #ffffff;
+  padding: 15px;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  transition: background-position 0.5s cubic-bezier(0,.5,0,1);
+  background-size: 200% 100%;
+  background-image: linear-gradient(to right, transparent 50%, rgba(255, 255, 255, 25%) 50%, rgba(255, 255, 255, 0%) 100%);
+}
+
+.side-nav-item:hover {
+  background-position: -100% 0;
+}
+
+#data-buttons {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  margin: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#data-buttons button {
+  background: none;
+  border: none;
+  aspect-ratio: 1/1;
+}
+
+#data-buttons button:hover, #data-buttons button:focus {
+  background-color: rgba(255, 255, 255, 10%);
+  border-radius: 999px;
+}
+
+#data-buttons button:focus-active {
+  outline: 2px solid #eeeeee;
+}
+
+#data-buttons button:focus {
+  background-color: rgba(255, 255, 255, 15%);
+}
+
+#data-buttons i {
+  color: #CA9D67;
+  margin: 10px;
+}
+
+.content {
+  overflow: auto;
+  position: absolute;
+  top: 95px;
+  bottom: 0px;
+  padding: 5px 20px 20px 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1F1F1F;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #aaaaaa;
+}
+
+button {
+  cursor: pointer;
+}
+
+input[type=number] {
+  background: none;
+  border: 1px solid #ffffff;
+  border-radius: 7px;
+  width: 50px;
+  color: #ffffff;
+  padding: 5px;
+}
+
+input[type=text] {
+  background: none;
+  border: 1px solid #ffffff;
+  border-radius: 7px;
+  width: 100px;
+  color: #ffffff;
+  padding: 5px;
+}
+
+input[type=checkbox] {
+  accent-color: #000000;
+  cursor: pointer;
+}
+
+input[type=date] {
+  background: none;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  accent-color: #ffffff;
+  padding: 5px;
+  border-radius: 7px;
+
+}
+
+input[type=color] {
+  margin: 0;
+  width: 100%;
+  border: none;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.color-picker-display {
+  border: 1px solid #ffffff;
+  border-radius: 7px;
+  width: 100px;
+  color: #ffffff;
+  margin: 5px;
+  padding: none;
+  display: inline-block;
+}
+
+input[type=time] {
+  cursor: pointer;
+}
+
+select {
+  background: none;
+  border: 1px solid #ffffff;
+  border-radius: 7px;
+  width: 200px;
+  color: #ffffff;
+  padding: 5px;
+}
+
+input {
+  margin: 5px;
+  color-scheme: dark;
+}
+
+strong {
+  text-transform: uppercase;
+}
+
+a {
+  color: #7575ff;
+}
+
+li {
+  margin: 10px;
+}
+
+ol.lower-roman {
+  list-style-type: lower-roman;
+}
