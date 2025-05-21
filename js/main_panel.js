@@ -2,8 +2,6 @@
 
 // Function to add and update the week calendar boxes
 function updateCalendar() {
-    let currentDate = currentTime()
-
     // Set up calendar container
     calendarSection.innerHTML = '';
 
@@ -14,18 +12,18 @@ function updateCalendar() {
     // Create each box
     for (let i = startDay; i <= endDay; i++) {
         // Find the date associated wih the box
-        let loopDate = new Date(currentDate)
+        let loopDate = new Date(currentTime())
         loopDate.setDate(loopDate.getDate()-loopDate.getDay()+i)
 
         // Get the schedule type for the box
-        let loopScheduleType = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(loopDate))?.schedule;
-        let loopSchedule = data().scheduleData?.day_types.find((item)=>item.name==loopScheduleType)
+        let loopDaySchedule = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(loopDate));
+        let loopSchedule = data().scheduleData?.day_types.find((item)=>item.name==loopDaySchedule?.schedule)
 
         // Get properties for the box
         let boxTag = loopSchedule?.tag ? loopSchedule.tag : loopDate.getDate();
         let boxBackground = loopSchedule?.color;
         let boxTextColor = loopSchedule?.text_color;
-        let boxName = loopSchedule?.display_name;
+        let boxName = loopDaySchedule?.alt_name ? loopDaySchedule.alt_name : loopSchedule?.display_name;
         
         // Create element using found data
         let element = document.createElement('div');
@@ -37,7 +35,7 @@ function updateCalendar() {
         element.title = boxName;
 
         // Apply style information to the box for the current day
-        if (getMDY(loopDate)==getMDY(currentDate)) {
+        if (getMDY(loopDate)==getMDY(currentTime())) {
             element.classList.add('current-day')
             element.style.setProperty('--current-day-box-color', boxTextColor)
         }
@@ -45,4 +43,15 @@ function updateCalendar() {
         // Add the element to the DOM
         calendarSection.appendChild(element);
     }
+}
+
+// Function to update current day info
+function updateInfo() {
+    let dayType = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(currentTime()))
+    dayType = dayType.alt_name ? dayType.alt_name : data().scheduleData.day_types.find((item)=>item.name==dayType.schedule).display_name
+
+    console.log(dayType)
+
+    // Update DOM elements
+    dayTypeSection.textContent = dayType;
 }
