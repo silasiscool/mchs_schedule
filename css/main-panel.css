@@ -1,8 +1,35 @@
 /* Styles for inside of the main panel */
 
 #main-panel > .calendar-section {
-    /* height: 5rem;
-    background: greenyellow; */
+    /* outline: 1px dashed blue; */
+    border-bottom: 1px solid var(--primary);
+    display: flex;
+}
+
+#main-panel > .calendar-section > .calendar-box {
+    flex: 1;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    position: relative;
+
+    border-right: 1px solid var(--background);
+}
+
+#main-panel > .calendar-section > .calendar-box:last-of-type {
+    border-right: none;
+}
+
+#main-panel > .calendar-section > .calendar-box.current-day::before {
+  content: "";
+  border: 5px double var(--current-day-box-color);
+  width: 95%;
+  height: 95%;
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
 }
 
 #main-panel > .info-section {
@@ -13,7 +40,3 @@
     align-items: center;
     justify-content: space-around;
 }
-
-/* #main-panel > .info-section > * {
-
-} */

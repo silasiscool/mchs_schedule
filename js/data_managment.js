@@ -1,12 +1,5 @@
 // Functions for managing stored data
 
-// Object for default data 
-const defaultData = {
-    settings: {
-        showWeekends: false
-    }
-};
-
 
 function data() {
     let data = storedData() ?
