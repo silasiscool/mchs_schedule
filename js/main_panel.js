@@ -48,9 +48,7 @@ function updateCalendar() {
 // Function to update current day info
 function updateInfo() {
     let dayType = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(currentTime()))
-    dayType = dayType.alt_name ? dayType.alt_name : data().scheduleData.day_types.find((item)=>item.name==dayType.schedule).display_name
-
-    console.log(dayType)
+    dayType = dayType?.alt_name ? dayType.alt_name : data().scheduleData?.day_types.find((item)=>item.name==dayType?.schedule)?.display_name
 
     // Update DOM elements
     dayTypeSection.textContent = dayType;
