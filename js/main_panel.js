@@ -47,9 +47,39 @@ function updateCalendar() {
 
 // Function to update current day info
 function updateInfo() {
+    // Get current day type
     let dayType = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(currentTime()))
-    dayType = dayType?.alt_name ? dayType.alt_name : data().scheduleData?.day_types.find((item)=>item.name==dayType?.schedule)?.display_name
+    let dayName = dayType?.alt_name ? dayType.alt_name : data().scheduleData?.day_types.find((item)=>item.name==dayType?.schedule)?.display_name
+
+    // Get current class name
+    let dayTypeSchedule = data().scheduleData?.day_types.find((item)=>item.name==dayType?.schedule).schedule
+
+    let currentClassIndex
+    dayTypeSchedule.forEach((item, i) => {
+        if (
+            !currentClassIndex 
+            && timeStrAsNum(get24Time(currentTime()))<=timeStrAsNum(item.time)
+        ) {
+            currentClassIndex = i-1;
+            return
+        }
+    });
+    let currentClass = dayTypeSchedule[currentClassIndex].name;
+
+
+    // Get end time string
+    let nextClass = dayTypeSchedule.find((item)=>{
+        return timeStrAsNum(get24Time(currentTime()))<=timeStrAsNum(item.time)
+    })
+
+    let endTimeStr = `Ends ${convert24to12(nextClass.time)}`
+
+
+
+    
 
     // Update DOM elements
-    dayTypeSection.textContent = dayType;
+    dayTypeSection.textContent = dayName;
+    classNameSection.textContent = currentClass;
+    endTimeSection.textContent = endTimeStr;
 }

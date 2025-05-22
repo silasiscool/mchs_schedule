@@ -7,7 +7,8 @@
  */
 function currentTime() {
     let currentTime = new Date()
-    currentTime.setDate(currentTime.getDate()+7*0)
+    // currentTime.setDate(currentTime.getDate()+7*0) // for dev only
+    // currentTime.setHours(9); // for dev only 
     return currentTime
 }
 
@@ -19,8 +20,30 @@ function currentTime() {
  * @returns {string} The formatted date string in MM/DD/YYYY format.
  */
 function getMDY(date) {
-    let month = String(date.getMonth() + 1);
-    let day = String(date.getDate());
-    let year = String(date.getFullYear());
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let year = date.getFullYear();
     return `${month}/${day}/${year}`
 }
+
+function get24Time(date) {
+    let hour = String(date.getHours()).padStart(2,0)
+    let minute = String(date.getMinutes()).padStart(2,0)
+    return `${hour}:${minute}`
+}
+
+function timeStrAsNum(timeStr) {
+    let timeArray = timeStr.split(':');
+    return timeArray[0]*60+timeArray[1]
+}
+
+function convert24to12(timeStr) {
+    let timeArray = timeStr.split(':');
+    let hour = parseInt(timeArray[0]);
+    let minute = timeArray[1];
+    let dayPeriod = hour < 12 ? "AM" : "PM";
+    hour = hour > 12 ? hour-12 : hour;
+
+    return `${hour}:${minute} ${dayPeriod}`
+}
+

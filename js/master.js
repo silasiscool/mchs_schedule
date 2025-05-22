@@ -2,6 +2,7 @@
 const calendarSection = document.querySelector('#main-panel .calendar-section');
 const dayTypeSection = document.querySelector('#main-panel .day-type');
 const classNameSection = document.querySelector('#main-panel .class-name');
+const endTimeSection = document.querySelector('#main-panel .end-time');
 
 // Object for default data 
 const defaultData = {
@@ -19,10 +20,12 @@ let runtimeData = {
 updateStoredData() // Begin updating local data
 
 // for testing only
+updateCalendar() 
+    updateInfo()
 setInterval(() => {
     updateCalendar() 
     updateInfo()
-}, 10);
+}, 5000);
 
 
 
