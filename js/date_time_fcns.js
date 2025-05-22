@@ -8,7 +8,8 @@
 function currentTime() {
     let currentTime = new Date()
     // currentTime.setDate(currentTime.getDate()+7*0) // for dev only
-    // currentTime.setHours(9); // for dev only 
+    // currentTime.setHours(10); // for dev only 
+    // currentTime.setMinutes(currentTime.getMinutes()-24) // for dev only
     return currentTime
 }
 
@@ -32,9 +33,19 @@ function get24Time(date) {
     return `${hour}:${minute}`
 }
 
-function timeStrAsNum(timeStr) {
+// function timeStrAsNum(timeStr) {
+//     let timeArray = timeStr.split(':');
+//     return timeArray[0]*60+timeArray[1]
+// }
+
+function timeStrAsDate(timeStr) {
     let timeArray = timeStr.split(':');
-    return timeArray[0]*60+timeArray[1]
+    let date = new Date()
+    date.setHours(timeArray[0]);
+    date.setMinutes(timeArray[1]);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    return date
 }
 
 function convert24to12(timeStr) {

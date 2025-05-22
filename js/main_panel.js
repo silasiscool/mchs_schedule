@@ -58,7 +58,7 @@ function updateInfo() {
     dayTypeSchedule.forEach((item, i) => {
         if (
             !currentClassIndex 
-            && timeStrAsNum(get24Time(currentTime()))<=timeStrAsNum(item.time)
+            && currentTime()<timeStrAsDate(item.time)
         ) {
             currentClassIndex = i-1;
             return
@@ -69,17 +69,20 @@ function updateInfo() {
 
     // Get end time string
     let nextClass = dayTypeSchedule.find((item)=>{
-        return timeStrAsNum(get24Time(currentTime()))<=timeStrAsNum(item.time)
+        return currentTime()<timeStrAsDate(item.time)
     })
 
     let endTimeStr = `Ends ${convert24to12(nextClass.time)}`
 
-
-
+    // Get countdown time
+    // console.log(timeStrAsDate(nextClass.time)-currentTime())
+    // console.log(currentTime());
+    let countdownStr = timeStrAsDate(nextClass.time)-currentTime()
     
 
     // Update DOM elements
     dayTypeSection.textContent = dayName;
     classNameSection.textContent = currentClass;
     endTimeSection.textContent = endTimeStr;
+    countdownSection.textContent = countdownStr;
 }
