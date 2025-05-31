@@ -7,9 +7,9 @@
  */
 function currentTime() {
     let currentTime = new Date()
-    // currentTime.setDate(currentTime.getDate()+7*0) // for dev only
+    // currentTime.setDate(currentTime.getDate()+2) // for dev only
     // currentTime.setHours(10); // for dev only 
-    // currentTime.setMinutes(currentTime.getMinutes()-24) // for dev only
+    // currentTime.setMinutes(currentTime.getMinutes()+10) // for dev only
     return currentTime
 }
 
@@ -40,7 +40,7 @@ function get24Time(date) {
 
 function timeStrAsDate(timeStr) {
     let timeArray = timeStr.split(':');
-    let date = new Date()
+    let date = currentTime()
     date.setHours(timeArray[0]);
     date.setMinutes(timeArray[1]);
     date.setSeconds(0);
@@ -49,7 +49,10 @@ function timeStrAsDate(timeStr) {
 }
 
 function convert24to12(timeStr) {
-    let timeArray = timeStr.split(':');
+    let timeArray = timeStr?.split(':');
+    if (!timeArray) {
+        throw new Error("Invalid Time String");
+    }
     let hour = parseInt(timeArray[0]);
     let minute = timeArray[1];
     let dayPeriod = hour < 12 ? "AM" : "PM";

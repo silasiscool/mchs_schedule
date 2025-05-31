@@ -16,14 +16,15 @@ function updateCalendar() {
         loopDate.setDate(loopDate.getDate()-loopDate.getDay()+i)
 
         // Get the schedule type for the box
-        let loopDaySchedule = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(loopDate));
-        let loopSchedule = data().scheduleData?.day_types.find((item)=>item.name==loopDaySchedule?.schedule)
+        let loopDaySchedule = getDaySchedule(loopDate);
+        
+        let loopScheduleType = getScheduleType(loopDaySchedule?.schedule)
 
         // Get properties for the box
-        let boxTag = loopSchedule?.tag ? loopSchedule.tag : loopDate.getDate();
-        let boxBackground = loopSchedule?.color;
-        let boxTextColor = loopSchedule?.text_color;
-        let boxName = loopDaySchedule?.alt_name ? loopDaySchedule.alt_name : loopSchedule?.display_name;
+        let boxTag = loopScheduleType?.tag ? loopScheduleType.tag : loopDate.getDate();
+        let boxBackground = loopScheduleType?.color;
+        let boxTextColor = loopScheduleType?.text_color;
+        let boxName = loopDaySchedule?.alt_name ? loopDaySchedule.alt_name : loopScheduleType?.display_name;
         
         // Create element using found data
         let element = document.createElement('div');
@@ -48,14 +49,18 @@ function updateCalendar() {
 // Function to update current day info
 function updateInfo() {
     // Get current day type
-    let dayType = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(currentTime()))
-    let dayName = dayType?.alt_name ? dayType.alt_name : data().scheduleData?.day_types.find((item)=>item.name==dayType?.schedule)?.display_name
+    let daySchedule = getDaySchedule(currentTime());
 
-    // Get current class name
-    let dayTypeSchedule = data().scheduleData?.day_types.find((item)=>item.name==dayType?.schedule).schedule
+    // Get schedule type for the day
+    let dayScheduleType = getScheduleType(daySchedule?.schedule)
 
+    // Get day name
+    let dayName = daySchedule?.alt_name ? daySchedule.alt_name : dayScheduleType?.display_name
+    
+
+    // Get the current class name
     let currentClassIndex
-    dayTypeSchedule.forEach((item, i) => {
+    dayScheduleType.schedule.forEach((item, i) => {
         if (
             !currentClassIndex 
             && currentTime()<timeStrAsDate(item.time)
@@ -64,20 +69,42 @@ function updateInfo() {
             return
         }
     });
-    let currentClass = dayTypeSchedule[currentClassIndex].name;
+    let currentClass = dayScheduleType.schedule[currentClassIndex]?.name;
 
 
     // Get end time string
-    let nextClass = dayTypeSchedule.find((item)=>{
+    let nextClass = dayScheduleType.schedule.find((item)=>{
         return currentTime()<timeStrAsDate(item.time)
     })
 
-    let endTimeStr = `Ends ${convert24to12(nextClass.time)}`
+    // Get the next class by incrementing the days offset
+    let daysOffset;
+    if (!nextClass) {
+        daysOffset = 1;
+        while (daysOffset<365) {
+            // Get the new search date
+            let loopDate = new Date()
+            loopDate.setDate(loopDate.getDate()+daysOffset)
+            let loopDaySchedule = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(loopDate));
+            let loopScheduleType = data().scheduleData?.day_types.find((item)=>item.name==loopDaySchedule?.schedule)
+            if (loopScheduleType?.schedule.length>0) {
+                nextClass = loopScheduleType.schedule[0];
+                break
+            }
+            // If no class found, increment days offset, and search the next day
+            daysOffset++
+        }
+    }
 
-    // Get countdown time
-    // console.log(timeStrAsDate(nextClass.time)-currentTime())
-    // console.log(currentTime());
-    let countdownStr = timeStrAsDate(nextClass.time)-currentTime()
+    // Get end time for the next class based on the next class and offset
+    let endTime = timeStrAsDate(nextClass?.time);
+    endTime.setDate(endTime.getDate()+(daysOffset?daysOffset:0));
+    
+
+    let endTimeStr = `Ends ${convert24to12(get24Time(endTime))}${daysOffset?` on ${getMDY(endTime)}`:''}`
+
+    // Get countdown time    
+    let countdownStr = endTime-currentTime()
     
 
     // Update DOM elements
