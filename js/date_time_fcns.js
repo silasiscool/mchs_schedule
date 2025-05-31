@@ -7,9 +7,10 @@
  */
 function currentTime() {
     let currentTime = new Date()
-    // currentTime.setDate(currentTime.getDate()+2) // for dev only
-    // currentTime.setHours(10); // for dev only 
-    // currentTime.setMinutes(currentTime.getMinutes()+10) // for dev only
+    // currentTime.setDate(currentTime.getDate()+0) // for dev only
+    // currentTime.setHours(currentTime.getHours()+0); // for dev only 
+    // currentTime.setMinutes(currentTime.getMinutes()+0) // for dev only
+    // currentTime.setSeconds(currentTime.getSeconds()+0) // for dev only
     return currentTime
 }
 

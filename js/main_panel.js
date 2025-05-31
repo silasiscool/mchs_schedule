@@ -71,22 +71,40 @@ function updateInfo() {
     });
     let currentClass = dayScheduleType.schedule[currentClassIndex]?.name;
 
+    let daysOffset = null;
+    if (!currentClass) {
+        daysOffset = 1;
+        while (daysOffset<365) {
+            // Get the new seach date
+            let loopDate = currentTime();
+            loopDate.setDate(loopDate.getDate()-daysOffset)
+            let loopDaySchedule = getDaySchedule(loopDate);
+            let loopScheduleType = getScheduleType(loopDaySchedule?.schedule)
+            if (loopScheduleType?.schedule.length>0) {
+                currentClassIndex = loopScheduleType.schedule.length-1;
+                currentClass = loopScheduleType.schedule[currentClassIndex].name;
+                break
+            }
+            daysOffset++;
+        }
+    }
 
-    // Get end time string
+
+    // Get next class
     let nextClass = dayScheduleType.schedule.find((item)=>{
         return currentTime()<timeStrAsDate(item.time)
     })
 
     // Get the next class by incrementing the days offset
-    let daysOffset;
+    daysOffset = null;
     if (!nextClass) {
         daysOffset = 1;
         while (daysOffset<365) {
             // Get the new search date
-            let loopDate = new Date()
+            let loopDate = currentTime();
             loopDate.setDate(loopDate.getDate()+daysOffset)
-            let loopDaySchedule = data().scheduleData?.day_schedule.find((item)=>item.date==getMDY(loopDate));
-            let loopScheduleType = data().scheduleData?.day_types.find((item)=>item.name==loopDaySchedule?.schedule)
+            let loopDaySchedule = getDaySchedule(loopDate);
+            let loopScheduleType = getScheduleType(loopDaySchedule?.schedule)
             if (loopScheduleType?.schedule.length>0) {
                 nextClass = loopScheduleType.schedule[0];
                 break
@@ -104,12 +122,26 @@ function updateInfo() {
     let endTimeStr = `Ends ${convert24to12(get24Time(endTime))}${daysOffset?` on ${getMDY(endTime)}`:''}`
 
     // Get countdown time    
-    let countdownStr = endTime-currentTime()
+    let countdownTime = endTime-currentTime()
+
+    // Sepparate countdown time into weeks, days, hours, minutes, seconds, and milliseconds
+    let countdownWeeks = Math.floor(countdownTime / (1000 * 60 * 60 * 24 * 7));
+    let countdownDays = Math.floor((countdownTime % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+    let countdownHours = Math.floor((countdownTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let countdownMinutes = Math.floor((countdownTime % (1000 * 60 * 60)) / (1000 * 60));
+    let countdownSeconds = Math.floor((countdownTime % (1000 * 60)) / 1000);
+    let countownMilliseconds = Math.floor(countdownTime % 1000);
+
     
 
     // Update DOM elements
     dayTypeSection.textContent = dayName;
     classNameSection.textContent = currentClass;
     endTimeSection.textContent = endTimeStr;
-    countdownSection.textContent = countdownStr;
+    countdownWeeksSection.textContent = countdownWeeks;
+    countdownDaysSection.textContent = countdownDays;
+    countdownHoursSection.textContent = countdownHours;
+    countdownMinutesSection.textContent = countdownMinutes;
+    countdownSecondsSection.textContent = countdownSeconds;
+    countdownMillisecondsSection.textContent = countownMilliseconds;
 }
